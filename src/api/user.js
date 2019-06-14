@@ -1,4 +1,6 @@
 import request from '@/utils/request'
+import axios from 'axios'
+let localHost = 'http://127.0.0.1:8000'
 
 export function login (data) {
   return request({
@@ -21,4 +23,8 @@ export function logout () {
     url: '/user/logout',
     method: 'post'
   })
+}
+
+export const login2 = params => {
+  return axios.post(`${localHost}/login/`, params)
 }
