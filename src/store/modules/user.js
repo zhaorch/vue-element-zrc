@@ -1,4 +1,4 @@
-import { login, logout, getInfo, login2 } from '@/api/user'
+import { login, logout, getInfo, login2, getInfo2 } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import { resetRouter } from '@/router'
 
@@ -45,6 +45,28 @@ const actions = {
         commit('SET_TOKEN', data.token)
         setToken(data.token)
         resolve()
+      }).catch(error => {
+        reject(error)
+      })
+    })
+  },
+
+  // get user info web
+  getInfo2 ({ commit, state }) {
+    return new Promise((resolve, reject) => {
+      getInfo2(state.token).then(response => {
+        const { data } = response
+
+        if (!data) {
+          // eslint-disable-next-line prefer-promise-reject-errors
+          reject('Verification failed, please Login again.')
+        }
+
+        const { name, avatar } = data
+
+        commit('SET_NAME', name)
+        commit('SET_AVATAR', avatar)
+        resolve(data)
       }).catch(error => {
         reject(error)
       })
