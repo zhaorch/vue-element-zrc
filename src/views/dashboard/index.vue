@@ -31,7 +31,7 @@ export default {
         this.loading = false
       }).catch((e) => {
         this.loading = false
-        this.$message.error(e)
+        // this.$message.error(e.message)
       })
     }
   }

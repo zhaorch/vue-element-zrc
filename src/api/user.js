@@ -28,10 +28,21 @@ export function logout () {
 export const login2 = params => {
   return axios.post(`${localHost}/login/`, params)
 }
-export const getInfo2 = params => {
-  return axios.get(`${localHost}/users/0/userInfo/`, params)
+export const getInfo2 = () => {
+  // return axios.get(`${localHost}/users/0/userInfo/`, params)
+  return request({
+    url: `${localHost}/users/0/userInfo/`,
+    method: 'get'
+  })
+}
+
+export const getGoodsList2 = () => {
+  return axios.get(`${localHost}/goods/`)
 }
 
 export const getGoodsList = () => {
-  return axios.get(`${localHost}/goods/`)
+  return request({
+    url: `${localHost}/goods/`,
+    method: 'get'
+  })
 }
