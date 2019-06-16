@@ -24,14 +24,14 @@ export function logout () {
     method: 'post'
   })
 }
-
-export const login2 = params => {
-  return axios.post(`${localHost}/login/`, params)
-  // return request({
-  //   url: `${localHost}/login/`,
-  //   method: 'post',
-  //   params: { params }
-  // })
+// post请求参数放在data里面，get请求参数放在params里
+export const login2 = data => {
+  // return axios.post(`${localHost}/login/`, params)
+  return request({
+    url: `${localHost}/login/`,
+    method: 'post',
+    data
+  })
 }
 export const getInfo2 = () => {
   // return axios.get(`${localHost}/users/0/userInfo/`, params)
