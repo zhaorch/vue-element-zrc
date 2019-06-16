@@ -108,7 +108,7 @@ export default {
             this.loading = false
           }).catch((e) => {
             this.loading = false
-            this.$message.error('用户名密码错误')
+            this.$message.error(e.message)
           })
         } else {
           console.log('error submit!!')

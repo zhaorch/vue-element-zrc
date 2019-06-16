@@ -27,6 +27,11 @@ export function logout () {
 
 export const login2 = params => {
   return axios.post(`${localHost}/login/`, params)
+  // return request({
+  //   url: `${localHost}/login/`,
+  //   method: 'post',
+  //   params: { params }
+  // })
 }
 export const getInfo2 = () => {
   // return axios.get(`${localHost}/users/0/userInfo/`, params)

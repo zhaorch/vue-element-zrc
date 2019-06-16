@@ -14,14 +14,14 @@ const service = axios.create({
 service.interceptors.request.use(
   config => {
     // do something before request is sent
-
-    if (store.getters.token) {
+    let jwtToken = getToken()
+    if (jwtToken) {
       // let each request carry token
       // ['X-Token'] is a custom headers key
       // please modify it according to the actual situation
 
       // config.headers['X-Token'] = getToken()
-      config.headers.Authorization = `JWT ${getToken()}`
+      config.headers.Authorization = `JWT ${jwtToken}`
     }
     return config
   },
@@ -49,37 +49,38 @@ service.interceptors.response.use(
   },
   error => {
     let res = error.response
-    switch (res.status) {
-      case 401:
+    if (res !== undefined) {
+      switch (res.status) {
+        case 401:
         // 返回 401 清除token信息并跳转到登录页面
-        MessageBox.confirm('You have been logged out, you can cancel to stay on this page, or log in again', 'Confirm logout', {
-          confirmButtonText: 'Re-Login',
-          cancelButtonText: 'Cancel',
-          type: 'warning'
-        }).then(() => {
-          store.dispatch('user/resetToken').then(() => {
-            location.reload()
+          MessageBox.confirm('You have been logged out, you can cancel to stay on this page, or log in again', 'Confirm logout', {
+            confirmButtonText: 'Re-Login',
+            cancelButtonText: 'Cancel',
+            type: 'warning'
+          }).then(() => {
+            store.dispatch('user/resetToken').then(() => {
+              location.reload()
+            })
           })
-        })
-        console.log('未登录 或者token过期')
-        break
-      case 403:
-        Message({
-          message: '您没有该操作权限',
-          type: 'error',
-          duration: 5 * 1000
-        })
-        break
-      case 500:
-        Message({
-          message: '服务器错误',
-          type: 'error',
-          duration: 5 * 1000
-        })
-        break
+          console.log('未登录 或者token过期')
+          break
+        case 403:
+          Message({
+            message: '您没有该操作权限',
+            type: 'error',
+            duration: 5 * 1000
+          })
+          break
+        case 500:
+          Message({
+            message: '服务器错误',
+            type: 'error',
+            duration: 5 * 1000
+          })
+          break
+      }
     }
     //   return Promise.reject(error.response.data) // 返回接口返回的错误信息
-
     return Promise.reject(error)
   }
 )
