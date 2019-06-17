@@ -56,16 +56,15 @@ const actions = {
     return new Promise((resolve, reject) => {
       getInfo2(state.token).then(response => {
         const { data } = response
-
         if (!data) {
           // eslint-disable-next-line prefer-promise-reject-errors
           reject('Verification failed, please Login again.')
         }
+        const { username, avatar } = data
 
-        const { name, avatar } = data
-
-        commit('SET_NAME', name)
+        commit('SET_NAME', username)
         commit('SET_AVATAR', avatar)
+
         resolve(data)
       }).catch(error => {
         reject(error)
@@ -101,6 +100,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       logout(state.token).then(() => {
         commit('SET_TOKEN', '')
+        commit('SET_NAME', '')
         removeToken()
         resetRouter()
         resolve()
