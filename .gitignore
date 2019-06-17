@@ -1,5 +1,6 @@
 .DS_Store
 node_modules/
+vue-element-zrc-win32-x64/
 /dist/
 npm-debug.log*
 yarn-debug.log*
