@@ -74,7 +74,6 @@ const actions = {
 
   // get user info
   getInfo ({ commit, state }) {
-    debugger
     return new Promise((resolve, reject) => {
       getInfo(state.token).then(response => {
         const { data } = response
@@ -107,6 +106,17 @@ const actions = {
       }).catch(error => {
         reject(error)
       })
+    })
+  },
+
+  // user logout
+  logout2 ({ commit, state }) {
+    return new Promise((resolve, reject) => {
+      commit('SET_TOKEN', '')
+      commit('SET_NAME', '')
+      removeToken()
+      resetRouter()
+      resolve()
     })
   },
 
